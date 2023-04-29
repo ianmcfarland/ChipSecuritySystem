@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Color.cs" />
     <Compile Include="ColorChip.cs" />
+    <Compile Include="ColorChipHelpers.cs" />
+    <Compile Include="Evaluator.cs" />
+    <Compile Include="ColorChipsResult.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
