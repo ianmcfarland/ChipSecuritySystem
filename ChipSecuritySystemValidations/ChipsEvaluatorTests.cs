@@ -177,5 +177,26 @@ namespace ChipSecuritySystemValidations
             Assert.AreEqual(3, result.ChipsUsed);
             Assert.AreEqual(3, result.ChipSequence.Count);
         }
+
+        [TestMethod]
+        public void MultiPathExtraGreenShortPathPass()
+        {
+            var chips = new List<ColorChip>
+            {
+                new ColorChip(Color.Blue, Color.Red),
+                new ColorChip(Color.Red, Color.Yellow),
+                new ColorChip(Color.Yellow, Color.Green),
+                new ColorChip(Color.Green, Color.Purple),
+                new ColorChip(Color.Purple, Color.Orange)
+            };
+
+            var result = Evaluator.CheckColorChips(chips);
+
+            /* should use all 5, not the shorter 3-chip path */
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(3, result.ChipsUsed);
+            Assert.AreEqual(3, result.ChipSequence.Count);
+        }
     }
 }
