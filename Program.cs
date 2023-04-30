@@ -10,7 +10,17 @@ namespace ChipSecuritySystem
     {
         static void Main(string[] args)
         {
+            /* Usage: */
 
+            var chips = new List<ColorChip>
+            {
+                /* Your set of chips here */
+            };
+
+            var result = Evaluator.CheckColorChips(chips);
+
+            Console.WriteLine($"Solution found? { (result.Success ? "Yes!" : "No") }");
+            Console.WriteLine(result.ChipSequence);
 
         }
     }

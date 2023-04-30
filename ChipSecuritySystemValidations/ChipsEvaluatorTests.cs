@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ChipSecuritySystemValidations
 {
     [TestClass]
-    public class ColorChipProcessorTests
+    public class ChipsEvaluatorTests
     {
         [TestMethod]
         public void EmptySetFail()
@@ -100,6 +100,25 @@ namespace ChipSecuritySystemValidations
         }
 
         [TestMethod]
+        public void UnusedChipPass()
+        {
+            var chips = new List<ColorChip>
+            {
+                new ColorChip(Color.Blue, Color.Red),
+                new ColorChip(Color.Red, Color.Yellow),
+                new ColorChip(Color.Yellow, Color.Green),
+                new ColorChip(Color.Orange, Color.Red)
+            };
+
+            var result = Evaluator.CheckColorChips(chips);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(3, result.ChipsUsed);
+            Assert.AreEqual(3, result.ChipSequence.Count);
+        }
+
+        [TestMethod]
         public void MultiPathExtraGreenPass()
         {
             var chips = new List<ColorChip>
@@ -160,45 +179,6 @@ namespace ChipSecuritySystemValidations
         }
 
         /*
-        [TestMethod]
-        public void Test()
-        {
-            var chips = new List<ColorChip>
-            {
-                new ColorChip(Color.Blue, Color.Green)
-            };
-
-            var result = Evaluator.CheckColorChips(chips);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void Test()
-        {
-            var chips = new List<ColorChip>
-            {
-                new ColorChip(Color.Blue, Color.Green)
-            };
-
-            var result = Evaluator.CheckColorChips(chips);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void Test()
-        {
-            var chips = new List<ColorChip>
-            {
-                new ColorChip(Color.Blue, Color.Green)
-            };
-
-            var result = Evaluator.CheckColorChips(chips);
-
-            Assert.IsNotNull(result);
-        }
-
         [TestMethod]
         public void Test()
         {

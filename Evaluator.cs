@@ -35,8 +35,21 @@ namespace ChipSecuritySystem
                 }
 
                 /* find the max depth where successful path */
+                result = GetMax(resultsList);
+            }
+
+            return result;
+        }
+
+        private static ColorChipsResult GetMax(IEnumerable<ColorChipsResult> resultsList)
+        {
+            var result = new ColorChipsResult() { Success = false };
+
+            if (resultsList.Any())
+            {
                 result = resultsList.Aggregate(
-                    (i, j) => {
+                    (i, j) =>
+                    {
                         if (i.Success && j.Success)
                             return i.ChipsUsed > j.ChipsUsed ? i : j;
                         else if (i.Success)
@@ -55,8 +68,6 @@ namespace ChipSecuritySystem
             Color currentColor, IList<ColorChip> chipsPool, 
             int depth, IList<ColorChip> currentPath) 
         {
-            var result = new ColorChipsResult();
-
             if (currentColor == Color.Green && !chipsPool.Any())
             {
                 return new ColorChipsResult() { Success = true, ChipsUsed = depth + 1, ChipSequence = currentPath };
@@ -70,38 +81,37 @@ namespace ChipSecuritySystem
                 var resultsList = new List<ColorChipsResult>();
                 foreach (var match in chipsPool.Where(c => c.HasColor(currentColor)).ToList())
                 {
-                    // Need to copy Pool and Path with the match swapped to Path
-                    //var pathResult = FindPath(match.OtherColor(currentColor), chipsPoolCopy, depth + 1, currentPathCopy)
-                    // resultsList.Add(pathResult);
+                    var newPool = new List<ColorChip>(chipsPool);
+                    newPool.Remove(match);
+
+                    var newPath = new List<ColorChip>(currentPath);
+                    newPath.Add(match);
+
+                    var pathResult = FindPath(match.OtherColor(currentColor).Value, newPool, depth + 1, newPath);
+                    resultsList.Add(pathResult);
                 }
                 // Aggregate on path results + current result
+                resultsList.Add(new ColorChipsResult() { Success = true, ChipsUsed = depth + 1, ChipSequence = currentPath });
+
+                return GetMax(resultsList);
             }
             else
             {
                 var resultsList = new List<ColorChipsResult>();
                 foreach (var match in chipsPool.Where(c => c.HasColor(currentColor)).ToList())
                 {
-                    // Need to copy Pool and Path with the match swapped to Path
-                    //var pathResult = FindPath(match.OtherColor(currentColor), chipsPoolCopy, depth + 1, currentPathCopy)
-                    // resultsList.Add(pathResult);
+                    var newPool = new List<ColorChip>(chipsPool);
+                    newPool.Remove(match);
+
+                    var newPath = new List<ColorChip>(currentPath);
+                    newPath.Add(match);
+
+                    var pathResult = FindPath(match.OtherColor(currentColor).Value, newPool, depth + 1, newPath);
+                    resultsList.Add(pathResult);
                 }
-                // Aggregate on path results
+                // Aggregate on path results + current result
+                return GetMax(resultsList);
             }
-
-            return result;
         }
-    }
-
-    class ColorChipNode
-    {
-        public ColorChipNode(Color value)
-        {
-            this.Value = value;
-            this.Children = new List<Color>();
-        }
-
-        public Color Value { get; set; }
-        
-        public IEnumerable<Color> Children { get; set; }
     }
 }
