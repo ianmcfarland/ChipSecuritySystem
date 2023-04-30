@@ -19,9 +19,15 @@ namespace ChipSecuritySystem
 
             var result = Evaluator.CheckColorChips(chips);
 
-            Console.WriteLine($"Solution found? { (result.Success ? "Yes!" : "No") }");
-            Console.WriteLine(result.ChipSequence);
-
+            if (result.Success)
+            {
+                Console.WriteLine("Solution found! Use sequence: ");
+                Console.WriteLine(result.ChipSequence);
+            }
+            else
+            {
+                Console.WriteLine(Constants.ErrorMessage);
+            }
         }
     }
 }

@@ -177,20 +177,5 @@ namespace ChipSecuritySystemValidations
             Assert.AreEqual(3, result.ChipsUsed);
             Assert.AreEqual(3, result.ChipSequence.Count);
         }
-
-        /*
-        [TestMethod]
-        public void Test()
-        {
-            var chips = new List<ColorChip>
-            {
-                new ColorChip(Color.Blue, Color.Green)
-            };
-
-            var result = Evaluator.CheckColorChips(chips);
-
-            Assert.IsNotNull(result);
-        }
-        */
     }
 }
