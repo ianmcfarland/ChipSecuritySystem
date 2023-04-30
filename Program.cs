@@ -15,6 +15,10 @@ namespace ChipSecuritySystem
             var chips = new List<ColorChip>
             {
                 /* Your set of chips here */
+                new ColorChip(Color.Blue, Color.Yellow),
+                new ColorChip(Color.Red, Color.Green),
+                new ColorChip(Color.Yellow, Color.Red),
+                new ColorChip(Color.Orange, Color.Purple)
             };
 
             var result = Evaluator.CheckColorChips(chips);
@@ -22,12 +26,17 @@ namespace ChipSecuritySystem
             if (result.Success)
             {
                 Console.WriteLine("Solution found! Use sequence: ");
-                Console.WriteLine(result.ChipSequence);
+                foreach (var chip in result.ChipSequence)
+                {
+                    Console.WriteLine(chip.ToString());
+                }
             }
             else
             {
                 Console.WriteLine(Constants.ErrorMessage);
             }
+
+            Console.ReadKey();
         }
     }
 }
